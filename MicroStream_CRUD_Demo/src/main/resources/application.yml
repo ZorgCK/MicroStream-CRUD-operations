@@ -1,0 +1,3 @@
+micronaut:
+  application:
+    name: microStream_CRUD_Demo

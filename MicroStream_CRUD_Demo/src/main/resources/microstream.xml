@@ -1,0 +1,4 @@
+<properties>
+    <property name="baseDirectory" value ="data" />
+    <property name="channelCount" value ="4" />
+</properties>
