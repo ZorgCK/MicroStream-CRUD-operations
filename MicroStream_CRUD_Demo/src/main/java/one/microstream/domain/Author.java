@@ -2,16 +2,16 @@ package one.microstream.domain;
 
 public class Author
 {
-	private String	id;
-	private String	firstname;
-	private String	lastname;
-	private String	email;
-	private String	gender;
+	private String				id;
+	private String				firstname;
+	private String				lastname;
+	private String				email;
+	private String				gender;
+	private transient String	alias;
 	
 	public Author()
 	{
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Author(String id, String firstname, String lastname, String email, String gender)
@@ -72,6 +72,16 @@ public class Author
 	public void setGender(String gender)
 	{
 		this.gender = gender;
+	}
+	
+	public String getAlias()
+	{
+		return alias;
+	}
+	
+	public void setAlias(String alias)
+	{
+		this.alias = alias;
 	}
 	
 }
