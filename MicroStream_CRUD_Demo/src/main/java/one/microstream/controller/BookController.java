@@ -1,6 +1,9 @@
 package one.microstream.controller;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
@@ -16,9 +19,10 @@ public class BookController
 	@Get("/create")
 	public HttpResponse<?> createBooks()
 	{
-		List<Book> loadMockupData = MockupUtils.loadMockupData();
+		List<Book> allCreatedBooks = MockupUtils.loadMockupData();
 		
-		// Enter your code here
+		DB.root.getBooks().addAll(allCreatedBooks);
+		DB.storageManager.store(DB.root.getBooks());
 		
 		return HttpResponse.ok("Books successfully created!");
 	}
@@ -32,15 +36,14 @@ public class BookController
 	@Get("/startsWith_A")
 	public List<Book> getBooksWithA()
 	{
-		// Enter your code here
-		
-		return null;
+		return DB.root.getBooks().stream().filter(b -> b.getName().startsWith("A")).collect(Collectors.toList());
 	}
 	
 	@Get("/clear")
 	public HttpResponse<?> clearBooks()
 	{
-		// Enter your code here
+		DB.root.getBooks().clear();
+		DB.storageManager.store(DB.root.getBooks());
 		
 		return HttpResponse.ok("Books successfully cleared!");
 	}
@@ -48,7 +51,10 @@ public class BookController
 	@Get("/updateSingle")
 	public HttpResponse<?> updateSingleBook()
 	{
-		// Enter your code here
+		Book book = DB.root.getBooks().stream().findFirst().get();
+		book.setRelease(LocalDate.now());
+		
+		DB.storageManager.store(book);
 		
 		return HttpResponse.ok("Book successfully updated!");
 	}
@@ -56,7 +62,13 @@ public class BookController
 	@Get("/updateMulti")
 	public HttpResponse<?> updateMultiBooks()
 	{
-		// Enter your code here
+		DB.root.getBooks().forEach(b ->
+		{
+			// Reduces price of all books by 10%
+			b.setPrice(b.getPrice().multiply(new BigDecimal(0.9)));
+		});
+		
+		DB.storageManager.storeAll(DB.root.getBooks());
 		
 		return HttpResponse.ok("Bookss successfully updated!");
 	}
