@@ -34,7 +34,8 @@ public class BookController
 		Author author = new Author("100", "John", "Doe", "j.doe@example.com", "Male");
 		Book book = new Book("123456789", "Single Book", LocalDate.now(), new BigDecimal(13.32), author);
 		
-		// Enter your code here
+		DB.root.getBooks().add(book);
+		DB.storageManager.store(DB.root.getBooks());
 		
 		return HttpResponse.ok("Book successfully created!");
 	}
