@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import io.micronaut.core.io.ResourceResolver;
 import io.micronaut.core.io.scan.ClassPathResourceLoader;
-import one.microstream.storage.configuration.Configuration;
-import one.microstream.storage.types.EmbeddedStorageManager;
+import one.microstream.storage.embedded.configuration.types.EmbeddedStorageConfiguration;
+import one.microstream.storage.embedded.types.EmbeddedStorageManager;
 
 
 public class DB
@@ -19,8 +19,7 @@ public class DB
 		ClassPathResourceLoader loader = new ResourceResolver().getLoader(ClassPathResourceLoader.class).get();
 		Optional<URL> resource = loader.getResource("microstream.xml");
 		
-		storageManager =
-			Configuration.LoadXml(resource.get()).createEmbeddedStorageFoundation().createEmbeddedStorageManager(
-				root).start();
+		storageManager = EmbeddedStorageConfiguration.load(
+			resource.get().getPath()).createEmbeddedStorageFoundation().createEmbeddedStorageManager(root).start();
 	}
 }
