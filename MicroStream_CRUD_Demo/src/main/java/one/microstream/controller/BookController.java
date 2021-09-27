@@ -75,7 +75,7 @@ public class BookController
 	@Get("/updateMulti")
 	public HttpResponse<?> updateMultiBooks()
 	{
-		DB.root.getBooks().forEach(b ->
+		DB.root.getBooks().stream().filter(b -> b.getName().startsWith("A")).forEach(b ->
 		{
 			// Reduces price of all books by 10%
 			b.setPrice(b.getPrice().multiply(new BigDecimal(0.9)));
