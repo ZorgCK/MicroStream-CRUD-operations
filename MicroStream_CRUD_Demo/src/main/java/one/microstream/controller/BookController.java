@@ -77,7 +77,7 @@ public class BookController
 	{
 		DB.root.getBooks().stream().filter(b -> b.getName().startsWith("A")).forEach(b ->
 		{
-			// Reduces price of all books by 10%
+			// Reduces price of books starting with an A by 10%
 			b.setPrice(b.getPrice().multiply(new BigDecimal(0.9)));
 		});
 		
