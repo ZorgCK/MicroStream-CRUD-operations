@@ -78,8 +78,9 @@ public class BookController
 	{
 		Storer storer = DB.storageManager.createEagerStorer();
 		
-		DB.root.getBooks().forEach(b ->
+		DB.root.getBooks().stream().filter(b -> b.getName().startsWith("A")).forEach(b ->
 		{
+			// Reduces price of books starting with an A by 10%
 			b.setPrice(b.getPrice().multiply(new BigDecimal(0.9)));
 			storer.store(b);
 		});
