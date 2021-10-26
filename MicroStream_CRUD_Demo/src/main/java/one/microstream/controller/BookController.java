@@ -10,6 +10,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import one.microstream.domain.Author;
 import one.microstream.domain.Book;
+import one.microstream.persistence.types.Storer;
 import one.microstream.storage.DB;
 import one.microstream.utils.MockupUtils;
 
@@ -75,13 +76,17 @@ public class BookController
 	@Get("/updateMulti")
 	public HttpResponse<?> updateMultiBooks()
 	{
+		Storer es = DB.storageManager.createEagerStorer();
+		
 		DB.root.getBooks().stream().filter(b -> b.getName().startsWith("A")).forEach(b ->
 		{
-			// Reduces price of books starting with an A by 10%
-			b.setPrice(b.getPrice().multiply(new BigDecimal(0.9)));
+			BigDecimal value = b.getPrice().multiply(new BigDecimal(0.9));
+			b.setPrice(value);
+			
+			es.store(es);
 		});
 		
-		DB.storageManager.storeAll(DB.root.getBooks());
+		es.commit();
 		
 		return HttpResponse.ok("Bookss successfully updated!");
 	}
