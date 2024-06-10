@@ -16,8 +16,8 @@
 
 	<properties>
 		<packaging>jar</packaging>
-		<jdk.version>11</jdk.version>
-		<release.version>11</release.version>
+		<jdk.version>17</jdk.version>
+		<release.version>17</release.version>
 		<micronaut.version>2.4.2</micronaut.version>
 		<exec.mainClass>one.microstream.Application</exec.mainClass>
 		<micronaut.runtime>netty</micronaut.runtime>
@@ -88,12 +88,12 @@
 		<dependency>
 			<groupId>org.eclipse.store</groupId>
 			<artifactId>storage-embedded</artifactId>
-			<version>1.0.0</version>
+			<version>1.3.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.store</groupId>
 			<artifactId>storage-embedded-configuration</artifactId>
-			<version>1.0.0</version>
+			<version>1.3.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
