@@ -77,17 +77,17 @@ public class BookController
 	@Get("/updateMulti")
 	public HttpResponse<?> updateMultiBooks()
 	{
-		Storer es = DB.storageManager.createEagerStorer();
+		Storer ls = DB.storageManager.createLazyStorer();
 		
 		DB.root.getBooks().stream().filter(b -> b.getName().startsWith("A")).forEach(b ->
 		{
 			BigDecimal value = b.getPrice().multiply(new BigDecimal(0.9));
 			b.setPrice(value);
 			
-			es.store(es);
+			ls.store(b);
 		});
 		
-		es.commit();
+		ls.commit();
 		
 		return HttpResponse.ok("Bookss successfully updated!");
 	}
